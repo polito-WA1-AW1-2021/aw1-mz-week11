@@ -8,7 +8,7 @@ app.use(morgan('dev'));
 const list = ['banana', 'apple', 'milk', 'bread'];
 
 app.get('/api/items', (req,res) => {
-    res.json(list) ;
+    setTimeout(()=>res.json(list), 3000);
 });
 
 app.post('/api/items', (req, res) => {

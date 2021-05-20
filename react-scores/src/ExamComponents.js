@@ -41,7 +41,26 @@ function ExamTable(props) {
 }
 
 function ExamRow(props) {
-  return <tr><ExamRowData exam={props.exam} examName={props.examName} /><RowControls exam={props.exam} deleteExam={props.deleteExam} /></tr>
+
+  let statusClass = null;
+
+  switch(props.exam.status) {
+    case 'added':
+      statusClass = 'table-success';
+      break;
+    case 'updated':
+      statusClass = 'table-warning';
+      break;
+    case 'deleted':
+      statusClass = 'table-danger';
+      break;
+    default:
+      break;
+  }
+
+  return <tr className={statusClass}>
+    <ExamRowData exam={props.exam} examName={props.examName} />
+    {!props.exam.status ? <RowControls exam={props.exam}deleteExam={props.deleteExam} />: <td/>}</tr>
 }
 
 function ExamRowData(props) {

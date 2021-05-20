@@ -39,8 +39,10 @@ app.get('/api/courses/:code', async (req, res) => {
 // GET /api/exams
 app.get('/api/exams', async (req, res) => {
   try {
-    const exams = await dao.listExams();
-    res.json(exams);
+    setTimeout(async ()=>{
+      const exams = await dao.listExams();
+      res.json(exams);
+    }, 3000);
   } catch(err) {
     res.status(500).end();
   }
