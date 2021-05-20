@@ -48,7 +48,7 @@ function ExamRowData(props) {
   return <>
     <td>{props.examName}</td>
     <td>{props.exam.score}</td>
-    <td>{props.exam.date.format('DD MMM YYYY')}</td>
+    <td>{dayjs(props.exam.date).format('DD MMM YYYY')}</td>
   </>;
 }
 
@@ -56,7 +56,7 @@ function RowControls(props) {
   return <td>
     <Link to={{
       pathname: "/update",
-      state: { exam: props.exam, examDate: props.exam.date.format('YYYY-MM-DD') }
+      state: { exam: props.exam }
     }}>{iconEdit}
   </Link> <span onClick={() => { props.deleteExam(props.exam.coursecode) }}>{iconDelete}</span>
   </td>
@@ -66,13 +66,13 @@ function ExamForm(props) {
   const location = useLocation();
   const [course, setCourse] = useState(location.state ? location.state.exam.coursecode : '');
   const [score, setScore] = useState(location.state ? location.state.exam.score : 30);
-  const [date, setDate] = useState(location.state ? location.state.examDate : dayjs().format('YYYY-MM-DD'));
+  const [date, setDate] = useState(location.state ? location.state.exam.date : dayjs().format('YYYY-MM-DD'));
   const [errorMessage, setErrorMessage] = useState('') ;
   const [submitted, setSubmitted] = useState(false);
   
   const handleSubmit = (event) => {
       event.preventDefault();
-      const exam = { coursecode: course, score: score, date: dayjs(date) };
+      const exam = { coursecode: course, score: score, date: dayjs(date).format('YYYY-MM-DD') };
       
       // SOME VALIDATION, ADD MORE!!!
       let valid = true;
